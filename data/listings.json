@@ -1,0 +1,148 @@
+{
+  "_comment": [
+    "Source of truth for the properties page. Edit this file, run the build, push.",
+    "Do not hand-edit properties.html — it is generated from here and your edits",
+    "would be overwritten.",
+    "",
+    "openHouse is local Eastern time in ISO form: YYYY-MM-DDTHH:MM. Leave it null",
+    "when there is no scheduled open house. Once a time is in the past, the page",
+    "stops showing it and shows a Zillow link instead, both at build time and live",
+    "in the visitor's browser, so a stale date is never displayed as if current.",
+    "",
+    "Pulled 27 Aug 2026 from the per-agent docs linked at linktr.ee/derekanders.",
+    "Ashley's and Derek's Stark County docs were not linked there - add them here",
+    "when you have them."
+  ],
+  "updated": "2026-08-27",
+  "agents": [
+    {
+      "name": "Aaliyah",
+      "area": "Akron Area Specialist",
+      "phone": null,
+      "listings": [
+        { "address": "168 Roswell St", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 4, "baths": 2, "rent": null,
+          "openHouse": "2026-08-29T10:00", "openHouseEnd": "10:30", "note": null },
+        { "address": "1449 Laffer Ave", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 4, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-29T10:40", "openHouseEnd": "11:10", "note": null },
+        { "address": "1886 Hillside Terr", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 3, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-29T11:15", "openHouseEnd": "11:45", "note": null },
+        { "address": "2216 10th St SW", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 4, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-31T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "887 Work Dr", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 5, "baths": 2, "rent": null,
+          "openHouse": "2026-08-31T17:45", "openHouseEnd": "18:15", "note": null },
+        { "address": "621 Creedmore Ave", "city": "Barberton", "state": "OH", "zip": null,
+          "beds": 3, "baths": 1.5, "rent": null,
+          "openHouse": null, "openHouseEnd": null, "note": "Lease to purchase only" }
+      ]
+    },
+    {
+      "name": "Harrison",
+      "area": "Akron & Massillon",
+      "phone": "330-324-8255",
+      "listings": [
+        { "address": "2258 Mogadore Rd", "city": "Akron", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-29T12:30", "openHouseEnd": "13:00", "note": null },
+        { "address": "2301 East Ave", "city": "Akron", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-09-02T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "317 Arch Ave SE", "city": "Massillon", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-09-03T17:00", "openHouseEnd": "17:30", "note": null }
+      ]
+    },
+    {
+      "name": "Danny",
+      "area": "Canton & Summit County",
+      "phone": "330-551-3539",
+      "listings": [
+        { "address": "1107 Oak Ave NW", "city": "Canton", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-09-03T18:00", "openHouseEnd": "19:00", "note": null },
+        { "address": "1444 6th St", "city": "Lakemore", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-09-08T18:30", "openHouseEnd": "19:00", "note": "Lease to own" },
+        { "address": "1035 Cherry Ave NE", "city": "Canton", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-18T17:45", "openHouseEnd": "18:15", "note": null },
+        { "address": "915 Troy Pl NW", "city": "Canton", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-20T17:45", "openHouseEnd": "18:15", "note": null }
+      ]
+    },
+    {
+      "name": "Adam",
+      "area": "Akron",
+      "phone": "330-993-0992",
+      "listings": [
+        { "address": "489 Delmar Ave", "city": "Akron", "state": "OH", "zip": "44310",
+          "beds": 2, "baths": 1, "rent": 850,
+          "openHouse": "2026-08-27T17:30", "openHouseEnd": "18:00", "note": null },
+        { "address": "347 E Voris St", "city": "Akron", "state": "OH", "zip": "44311",
+          "beds": 4, "baths": 1.5, "rent": 1225,
+          "openHouse": "2026-08-25T17:30", "openHouseEnd": "18:00", "note": null },
+        { "address": "2608 Leland Ave", "city": "Akron", "state": "OH", "zip": "44312",
+          "beds": 3, "baths": 1.5, "rent": 1350,
+          "openHouse": "2026-08-25T18:30", "openHouseEnd": "19:00", "note": null },
+        { "address": "1169 7th Ave", "city": "Akron", "state": "OH", "zip": "44306",
+          "beds": 3, "baths": 1.5, "rent": 1225,
+          "openHouse": "2026-08-26T17:30", "openHouseEnd": "18:00", "note": null }
+      ]
+    },
+    {
+      "name": "Trent",
+      "area": "Akron & Barberton",
+      "phone": null,
+      "listings": [
+        { "address": "235 S Arlington St #4", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 2, "baths": 1, "rent": null,
+          "openHouse": null, "openHouseEnd": null, "note": "Private tours only" },
+        { "address": "630 Laffollette St", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 4, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-21T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "1635 Claudia Ave", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 3, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-21T17:45", "openHouseEnd": "18:15", "note": null },
+        { "address": "632 Grace Ave", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 4, "baths": 2, "rent": null,
+          "openHouse": "2026-08-17T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "199 Nieman St", "city": "Akron", "state": "OH", "zip": null,
+          "beds": 3, "baths": 1.5, "rent": null,
+          "openHouse": "2026-08-17T17:45", "openHouseEnd": "18:15", "note": null }
+      ]
+    },
+    {
+      "name": "Aaron",
+      "area": "Akron & Surrounding Areas",
+      "phone": "330-552-8098",
+      "listings": [
+        { "address": "2162 8th St SW", "city": "Akron", "state": "OH", "zip": "44314",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-16T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "1279 Atwood Ave", "city": "Akron", "state": "OH", "zip": "44301",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-17T15:15", "openHouseEnd": "15:45", "note": null },
+        { "address": "143 Brighton Dr", "city": "Akron", "state": "OH", "zip": "44301",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-17T16:00", "openHouseEnd": "16:30", "note": null },
+        { "address": "2223 18th St SW", "city": "Akron", "state": "OH", "zip": "44314",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-17T17:00", "openHouseEnd": "17:30", "note": null },
+        { "address": "714 Corice St", "city": "Akron", "state": "OH", "zip": "44306",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-18T15:30", "openHouseEnd": "15:50", "note": null },
+        { "address": "958 Inman St", "city": "Akron", "state": "OH", "zip": "44306",
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-18T16:00", "openHouseEnd": "16:30", "note": null },
+        { "address": "2141 13th St SW #2", "city": "Akron", "state": "OH", "zip": null,
+          "beds": null, "baths": null, "rent": null,
+          "openHouse": "2026-08-18T16:45", "openHouseEnd": "17:15", "note": null }
+      ]
+    }
+  ]
+}

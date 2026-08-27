@@ -5,7 +5,8 @@
   "scripts": {
     "build": "python3 tools/transform.py && npm run css",
     "css": "tailwindcss -c tools/tailwind.config.js -i tools/input.css -o assets/css/site.css --minify",
-    "verify": "node tools/verify.mjs"
+    "verify": "node tools/verify.mjs",
+    "test": "node tools/verify.mjs && node tools/test-expiry.mjs"
   },
   "devDependencies": {
     "@fontsource/inter": "5.1.0",

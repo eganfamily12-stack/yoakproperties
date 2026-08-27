@@ -7,7 +7,8 @@ serve it: every file in the repository root is the deployed site exactly as it s
 |---|---|
 | Host | GitHub Pages, served from the repository root |
 | Custom domain | `www.yoakproperties.com` (see [DNS](#dns-cutover)) |
-| Pages | `index.html`, `about.html`, `properties.html`, `privacy.html`, `terms.html`, `404.html` |
+| Pages | `index.html`, `properties.html`, `faq.html`, `about.html`, `privacy.html`, `terms.html`, `404.html` |
+| Listings | generated from `data/listings.json` &mdash; **edit that, not `properties.html`** |
 | Third-party runtime requests | **none** — fonts, icons, CSS, JS and images are all local |
 | Total weight, home page | ~330 KB first visit, ~30 KB on repeat visits |
 
@@ -15,45 +16,95 @@ serve it: every file in the repository root is the deployed site exactly as it s
 
 ## Before this goes live — open items
 
-These need a decision from someone at Yoak. Nothing here blocks deployment, but
-each one is visible to the public once the DNS is switched.
+Two of these are blockers. The rest are improvements.
 
-1. **`APPLY_URL` in `tools/transform.py`** currently points at the leasing
-   Linktree (`linktr.ee/derekanders`). Every "apply", "see current listings" and
-   "open house times" link on the site uses it. If Yoak has a Zillow *profile*
-   URL, put it there instead and rebuild — it is one constant in one file.
-2. **The three listing sections are hardcoded** (Aaliyah, Aaron, Trent). The
-   leasing Linktree lists eight agents — Ashley, Derek, Harrison, Danny, Adam are
-   missing here. The addresses shown were accurate as of June/July 2026. Stale
-   dates have been removed and every card now points at Zillow for live details,
-   but the addresses themselves will still drift. Longer term this section should
-   be generated from whatever holds the real inventory rather than typed in.
-3. **Listing photographs are representative, not per-address.** The photos are
-   genuine Yoak interiors pulled from the current Wix site, but there is no record
-   of which unit each one shows, so the properties page says so in print rather
-   than implying a photo belongs to the address above it. Replace with real
-   per-address photos when available and delete that sentence from
-   `ZILLOW_NOTE` in `tools/transform.py`.
-4. **Google reviews link** uses a Maps *search* URL that resolves to the office.
-   Swapping in the place-ID review link (`MAPS_URL` / `REVIEWS_URL`) makes the
-   "write a review" dialog open directly.
-5. **`privacy.html` and `terms.html` have not been reviewed by counsel.** They
-   were generated as part of the design mockups. Two specific claims do not match
-   how Yoak actually operates:
-   - Both describe a first-party "Tenant Portal" and application flow *on this
-     website*. In reality the portal is Buildium and applications go through
-     Zillow. The documents should either describe those third parties or be
-     narrowed to cover only this website.
-   - "Last Updated" was `October 2024` in the mockups. Since these pages have
-     never been published, that date would assert a history they do not have; it
-     is now the first-publication date (27 August 2026). Change it to whatever
-     counsel decides is correct.
-6. **Testimonials.** The mockup shipped three invented tenant quotes attributed
-   to named people ("Liam Smith", "Ava Brown", "Noah Garcia"). Those are gone,
-   replaced by a link to the real Google Business profile. If Yoak wants quotes
-   on the page, they need to be real ones with permission to publish.
+### 1. Resident portal link — BLOCKER, needs a URL
 
----
+`PORTAL_URL` in `tools/transform.py` is **deliberately empty**. While it is
+empty, the Tenant Portal button is omitted from the header, the mobile menu and
+the footer, and the build prints a reminder. The site currently contains **no
+reference to a resident portal anywhere** — that was an explicit decision, not
+an oversight.
+
+Do not paste the AppFolio *staff* login (`account.appfolio.com/realms/...`).
+That is the employee account picker, and the URL carries a session-specific
+`state` token. The resident portal is a per-company subdomain, typically
+`https://<company>.appfolio.com/connect`, found under **Settings → Online
+Portal** in AppFolio.
+
+The old Buildium portal (`yoakproperties.managebuilding.com`) must never be
+linked — Yoak has migrated off it. The build fails if that hostname reappears.
+
+When you are ready to advertise the portal: set `PORTAL_URL`, then restore the
+"Online Portal" service cards on the home and about pages and the rent-payment
+line on the FAQ page. All three live in `strip_portal()` and `tools/faq.py`.
+
+### 2. Zillow destination — needs a URL
+
+`APPLY_URL` points at the leasing Linktree (`linktr.ee/derekanders`) because no
+Yoak Zillow *profile* URL was available. It is used by "See all current
+listings" and "Apply on Zillow". Individual listing cards do not depend on it —
+they build a per-address Zillow lookup from `ZILLOW_ADDR`.
+
+### 3. Legal pages have not been reviewed by counsel
+
+`privacy.html` and `terms.html` came from the mockups and have been edited:
+
+- **Terms section 2, "Tenant Portal & Accounts", was removed** and sections 3–5
+  renumbered to 2–4. It described a first-party portal as a service of this
+  website, which is not accurate and is not being advertised yet.
+- **Three privacy sections were written from scratch** — "Data Sharing &
+  Disclosure", "Your Rights" and "Contact Us". The mockup listed all three in
+  its contents but never wrote them, so they were dead links. The drafts
+  describe how Yoak actually operates (screening via Zillow, work orders to
+  contractors, reporting to owners) and cover FCRA adverse-action rights. **They
+  are a reasonable starting point, not legal advice.**
+- **"Last Updated" is 27 August 2026**, the first-publication date. The mockups
+  said October 2024, which would assert a history these documents do not have.
+
+### 4. Listing data goes stale — but the page no longer lies about it
+
+`data/listings.json` was populated on 27 August 2026 from the six per-agent
+documents on the leasing Linktree. Two of those six (Aaron's and Trent's) were
+*already* advertising open houses that had passed.
+
+The page handles this in two places, so a past date is never shown as upcoming:
+
+- **At build time**, any open house before today renders as "Open house times on
+  Zillow" instead of a date.
+- **In the browser**, `assets/js/site.js` re-checks against the visitor's own
+  clock and does the same swap for anything that expired since the last build.
+  Home-page teaser cards are removed outright, and the whole "Next open houses"
+  section hides itself if all three expire.
+
+`tools/test-expiry.mjs` proves this by fast-forwarding the browser clock. Run it
+after touching the listings or the JS.
+
+Still worth doing: **Ashley's and Derek's Stark County listings are missing** —
+their documents were not linked on the Linktree. And longer term this should
+pull from AppFolio rather than being maintained by hand.
+
+### 5. Photographs are representative, not per-address
+
+The 13 photographs are genuine Yoak interiors and exteriors taken from the
+current Wix site, but there is no record of which unit each one shows. So
+listing cards carry **no photograph at all** — with 13 images and 29 listings,
+any mapping would repeat photos across different addresses and imply each was of
+that house. The real interiors appear once, in a gallery labelled as
+representative. Add per-address photos and the card layout can gain an image.
+
+### 6. Entity name is inconsistent
+
+The site says "Yoak Properties & Construction **Co.**" The FAQ tells applicants
+to make cashier's cheques payable to "Yoak Properties and Construction **LLC**".
+The Ohio registration is "YOAK PROPERTIES AND CONSTRUCTION CO." The FAQ page
+keeps the "LLC" wording verbatim, because that is what a cheque has to say — but
+somebody should confirm which entity is correct and make the two agree.
+
+### 7. Google reviews link
+
+Uses a Maps *search* URL that resolves to the office. The place-ID review link
+would open the "write a review" dialog directly.
 
 ## Deploying
 
@@ -98,7 +149,22 @@ Edit, commit, push to `main`. Pages redeploys in about a minute.
 
 ## Editing content
 
-Most copy lives directly in the page HTML — open the file, change the words.
+**Listings live in `data/listings.json`.** That is the only file to touch when
+inventory changes:
+
+```json
+{ "address": "168 Roswell St", "city": "Akron", "state": "OH", "zip": null,
+  "beds": 4, "baths": 2, "rent": null,
+  "openHouse": "2026-08-29T10:00", "openHouseEnd": "10:30", "note": null }
+```
+
+`openHouse` is local Eastern time. Set it to `null` when there is no scheduled
+open house — the card then links to Zillow for times. `note` renders as a badge
+("Lease to purchase only", "Private tours only"). Adding an agent is a new entry
+in the `agents` array; the page, the home-page teaser and the open-house count
+all follow automatically.
+
+Most other copy lives directly in the page HTML — open the file, change the words.
 
 Anything that appears on **more than one page** is generated, and editing the HTML
 by hand will be overwritten on the next build. That includes the header, the
@@ -110,7 +176,7 @@ STREET     = '1361 Wooster Road W, Suite A'
 CITY_LINE  = 'Barberton, OH 44203'
 PHONE_TEXT = '330-794-7156'
 EMAIL      = 'info@yoakproperties.com'
-PORTAL_URL = 'https://yoakproperties.managebuilding.com/Resident/public/home'
+PORTAL_URL = ''                                  # empty = no portal link anywhere
 APPLY_URL  = 'https://linktr.ee/derekanders'
 ```
 
@@ -120,34 +186,39 @@ Change one, rebuild, and it updates on all six pages at once.
 
 ```bash
 cd tools && npm install && cd ..
-python3 tools/transform.py     # mockups in tools/src/ -> the six page files
+python3 tools/transform.py     # -> the seven page files
 npm --prefix tools run css     # recompile assets/css/site.css
 node tools/verify.mjs          # render every page and check it
+node tools/test-expiry.mjs     # fast-forward the clock, check dates expire
 ```
 
 `transform.py` fails loudly if a page still contains a placeholder link, a dead
-image URL, the wrong zip code, or an icon name left as text.
+image URL, the wrong zip code, an icon name left as text, **any mention of a
+portal**, or the old Buildium hostname.
 
 `verify.mjs` loads all six pages at 1440px and 390px in headless Chromium and
 fails on: broken images, horizontal overflow, links that go nowhere, buttons
-with no behaviour, a page without exactly one `<h1>`, any 4xx response, or a
-console error. It also opens and closes the mobile menu. Screenshots land in
-`shots/`. **Run it before pushing.**
+with no behaviour, a page without exactly one `<h1>`, any 4xx response, a
+console error, **a past open house still on the page**, or a `<template>`
+rendering visibly. It also opens and closes the mobile menu. Screenshots land in
+`shots/`. **Run both before pushing.**
 
 ---
 
 ## How this repository is laid out
 
 ```
-index.html  about.html  properties.html      the deployed pages
-privacy.html  terms.html  404.html
-assets/css/site.css                          compiled Tailwind, 32 KB minified
-assets/js/site.js                            mobile menu + table-of-contents highlight
+index.html  properties.html  faq.html      the deployed pages
+about.html  privacy.html  terms.html  404.html
+data/listings.json                           inventory: the one file to edit
+assets/css/site.css                          compiled Tailwind, minified
+assets/js/site.js                            mobile menu, open-house expiry, TOC highlight
 assets/fonts/                                7 text faces + a 3 KB icon subset
 assets/img/                                  photographs, logo, favicons, OG image
 CNAME  robots.txt  sitemap.xml  .nojekyll    hosting metadata
 tools/                                       build tooling, not served
 tools/src/                                   the original design mockups
+tools/properties.py  tools/faq.py            page generators
 ```
 
 `.nojekyll` stops GitHub from running the files through Jekyll, which would
@@ -214,6 +285,26 @@ right in a screenshot but were not a working website. For the record:
   block Google Fonts, and nothing about visitors is shared with a third party.
 - Images are sized, `loading="lazy"` below the fold, and the hero is
   `fetchpriority="high"`.
+
+**Added in the second pass**
+
+- **A "How to Apply" page** built from Yoak's own FAQ document, which until now
+  sat in a Google Doc behind a link tree — invisible to prospective tenants and
+  to search engines. It covers qualifying criteria, the voucher policy, the
+  application fee and timeline, the deposit process, and lease-to-purchase
+  terms. These are the questions the office answers on the phone all day.
+- **A "Next open houses" strip on the home page**, so a visitor can see whether
+  anything is actually being shown this week without clicking through.
+- **Listings moved out of HTML into `data/listings.json`**, and populated with
+  real current inventory for six agents pulled from the leasing documents.
+- **Open houses now expire by themselves**, at build time and again in the
+  browser. This is the difference between a page that is out of date and a page
+  that is wrong.
+- **All portal language removed** — the button, the service cards on the home
+  and about pages, the FAQ rent-payment line, a Terms section, and a stale
+  privacy contents entry.
+- **Three missing privacy sections written**, replacing three dead anchors.
+- **HTML comments stripped** from output; one of them was `<!-- Portal Card -->`.
 
 **Accessibility and SEO**
 

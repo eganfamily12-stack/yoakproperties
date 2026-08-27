@@ -26,6 +26,8 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 SRC = 'src'
 OUT = 'site'
 
@@ -44,14 +46,29 @@ EMAIL       = 'info@yoakproperties.com'
 YEAR        = '2026'
 LEGAL_DATE  = 'August 27, 2026'
 
-# Resident portal — Yoak's live Buildium tenant portal.
-PORTAL_URL  = 'https://yoakproperties.managebuilding.com/Resident/public/home'
+# Resident portal. Yoak has moved to AppFolio, so the old Buildium portal
+# (yoakproperties.managebuilding.com) must NOT be linked — it would send
+# tenants to a legacy system.
+# TODO(Joshua): paste the AppFolio *resident* portal URL here. It is a
+# per-company subdomain, typically https://<company>.appfolio.com/connect,
+# found under Settings -> Online Portal. Leave it empty and the Tenant Portal
+# button is omitted from the header, the mobile menu and the footer rather
+# than shipping a link that does not work.
+PORTAL_URL  = ''
 
-# Leasing hub. Yoak's own FAQ says open house times and full details live on
-# the Zillow listing, reached through the per-agent docs on this page.
-# TODO(Joshua): if Yoak has a Zillow *profile* URL, put it here — it is used
-# in every "apply / see current listings" call to action on the site.
+# Applications go through Zillow: "All prospective tenants must apply through
+# Zillow" (Yoak FAQ). There is no Yoak Zillow profile URL on hand, so this
+# points at the public leasing hub that links each agent's current listings.
+# TODO(Joshua): replace with the Yoak Zillow profile URL when available.
 APPLY_URL   = 'https://linktr.ee/derekanders'
+
+# Per-address Zillow lookup. Lands on the property's own Zillow page, and
+# degrades to a Zillow search if the address slug does not resolve.
+ZILLOW_ADDR = 'https://www.zillow.com/homes/{slug}_rb/'
+
+APP_FEE     = '$35 per applicant'
+BUILD_TODAY = '2026-08-27'
+BUILD_DATE_TEXT = '27 August 2026'
 
 # Google Maps search that resolves to the office listing. Swap for the
 # place-ID review link if you want the "write a review" dialog to open.
@@ -64,8 +81,8 @@ PAGES = [
     ('home', 'index.html', 'home',
      f'{BRAND_SHORT} | Affordable Rental Homes in Akron, Canton &amp; Barberton, OH',
      'Affordable, well-managed rental homes across Akron, Canton, Barberton, '
-     'Massillon and the surrounding Ohio communities. On-staff maintenance, '
-     'responsive tenant support and an online resident portal.'),
+     'Massillon and the surrounding Ohio communities, with on-staff maintenance '
+     'and responsive tenant support.'),
     ('about', 'about.html', 'about',
      f'About Us | {BRAND_SHORT}',
      'Yoak Properties &amp; Construction Co. provides affordable, quality housing '
@@ -80,8 +97,12 @@ PAGES = [
      'applicant and tenant information.'),
     ('terms', 'terms.html', None,
      f'Terms of Service | {BRAND_SHORT}',
-     'Terms governing use of the Yoak Properties website, resident portal and '
-     'rental application process.'),
+     'Terms governing use of the Yoak Properties website and the rental '
+     'application process.'),
+    ('faq', 'faq.html', 'faq',
+     f'How to Apply | {BRAND_SHORT}',
+     'Qualifying criteria, application fees, voucher policy, open house process and '
+     'lease-to-purchase terms for Yoak Properties rentals in Akron, Canton and Barberton.'),
     ('404', '404.html', None,
      f'Page Not Found | {BRAND_SHORT}',
      'That page could not be found. Browse current Yoak Properties rentals instead.'),
@@ -89,6 +110,7 @@ PAGES = [
 
 NAV = [('home', 'Home', 'index.html'),
        ('properties', 'Our Properties', 'properties.html'),
+       ('faq', 'How to Apply', 'faq.html'),
        ('about', 'About Us', 'about.html')]
 
 
@@ -123,6 +145,18 @@ def header(active):
             out.append(f'<a class="{cls}" href="{href}"{cur}>{label}</a>')
         return '\n'.join(out)
 
+    portal_desktop = (
+        f'<div class="hidden md:flex shrink-0">'
+        f'<a class="bg-deep-navy text-surface-off-white px-6 py-2 rounded font-label-bold '
+        f'text-label-bold hover:bg-primary-container transition-colors" href="{PORTAL_URL}" '
+        f'rel="noopener" target="_blank">Tenant Portal</a></div>'
+    ) if PORTAL_URL else ''
+    portal_mobile = (
+        f'\n<a class="block px-margin-mobile py-4 font-label-bold text-label-bold '
+        f'text-heritage-gold" href="{PORTAL_URL}" rel="noopener" target="_blank">'
+        f'Tenant Portal &#8599;</a>'
+    ) if PORTAL_URL else ''
+
     return f'''<a class="skip-link" href="#main">Skip to main content</a>
 <header class="bg-surface-off-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30 shadow-sm">
 <div class="flex justify-between items-center gap-4 w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-20">
@@ -133,21 +167,21 @@ def header(active):
 <nav aria-label="Main navigation" class="hidden md:flex items-center gap-8">
 {links(False)}
 </nav>
-<div class="hidden md:flex shrink-0">
-<a class="bg-deep-navy text-surface-off-white px-6 py-2 rounded font-label-bold text-label-bold hover:bg-primary-container transition-colors" href="{PORTAL_URL}" rel="noopener" target="_blank">Tenant Portal</a>
-</div>
+{portal_desktop}
 <button aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu" class="md:hidden text-deep-navy p-2 -mr-2 hover:bg-surface-container-low rounded-lg transition-colors" id="nav-toggle" type="button">
 {SVG_MENU}{SVG_CLOSE}
 </button>
 </div>
 <div class="md:hidden hidden border-t border-outline-variant/30 bg-surface-off-white shadow-lg" id="mobile-nav">
 <nav aria-label="Mobile navigation" class="flex flex-col">
-{links(True)}
-<a class="block px-margin-mobile py-4 font-label-bold text-label-bold text-heritage-gold" href="{PORTAL_URL}" rel="noopener" target="_blank">Tenant Portal &#8599;</a>
+{links(True)}{portal_mobile}
 </nav>
 </div>
 </header>'''
 
+
+FOOTER_PORTAL = (f'\n<a class="hover:text-heritage-gold transition-colors" href="{PORTAL_URL}"'
+                 f' rel="noopener" target="_blank">Tenant Portal</a>') if PORTAL_URL else ''
 
 FOOTER = f'''<footer class="bg-deep-navy text-surface-off-white border-t border-slate-gray/20 mt-auto">
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter px-margin-mobile md:px-gutter py-section-gap-mobile md:py-16 max-w-container-max mx-auto">
@@ -169,8 +203,8 @@ FOOTER = f'''<footer class="bg-deep-navy text-surface-off-white border-t border-
 <a class="hover:text-heritage-gold transition-colors" href="index.html">Home</a>
 <a class="hover:text-heritage-gold transition-colors" href="properties.html">Our Properties</a>
 <a class="hover:text-heritage-gold transition-colors" href="about.html">About Us</a>
-<a class="hover:text-heritage-gold transition-colors" href="about.html#contact">Contact Us</a>
-<a class="hover:text-heritage-gold transition-colors" href="{PORTAL_URL}" rel="noopener" target="_blank">Tenant Portal</a>
+<a class="hover:text-heritage-gold transition-colors" href="faq.html">How to Apply</a>
+<a class="hover:text-heritage-gold transition-colors" href="about.html#contact">Contact Us</a>{FOOTER_PORTAL}
 </nav>
 </div>
 <div class="space-y-3">
@@ -347,7 +381,64 @@ def clean(html):
     html = re.sub(r'<a ([^>]*href="https?://(?!www\.yoakproperties)[^"]*")((?![^>]*rel=)[^>]*)>',
                   r'<a \1 rel="noopener" target="_blank"\2>', html)
     html = html.replace('fill-icon', '')
+    # design-tool comments ("<!-- Portal Card -->", "<!-- Smaller Card 1 -->")
+    # are noise in a shipped page, and one of them named a feature we are not
+    # advertising yet
+    html = re.sub(r'<!--(?!\[if).*?-->', '', html, flags=re.S)
     html = icons_to_entities(html)
+    return html
+
+
+# --------------------------------------------------------------------------
+# Portal language
+# --------------------------------------------------------------------------
+# The resident portal is not being advertised on the public site yet, so no page
+# may direct a visitor to one. PORTAL_URL being empty removes the button; this
+# removes the surrounding copy, including a whole Terms section that described a
+# portal as a service of this website. Section numbering is closed up after the
+# removal so the document does not skip from 1 to 3.
+def strip_portal(html, page):
+    if page == 'home':
+        html = html.replace(
+            'Online Portal',
+            'Simple Applications').replace(
+            'Convenient online portal for quick access to important services.',
+            'One $35 application on Zillow covers every property we manage for '
+            '30 days. <a class="underline hover:no-underline" href="faq.html">'
+            'See the requirements</a>.')
+        html = html.replace('&#xE30A;', '&#xE85D;')          # computer -> assignment
+
+    if page == 'about':
+        html = html.replace(
+            'Online Portal',
+            'Lease to Purchase').replace(
+            'Convenient online portal for quick access to important services and payments.',
+            'Selected homes are offered lease to purchase, with on-time payments '
+            'reported to help build your credit toward buying.')
+        html = html.replace('&#xE1B1;', '&#xEA09;')          # devices -> home_work
+
+    if page == 'privacy':
+        # The contents list linked to a "#tenant-portal" section that the mockup
+        # never actually contained, so this was a dead anchor as well.
+        html = re.sub(r'<a\b[^>]*href="#tenant-portal"[^>]*>.*?</a>', '', html, flags=re.S)
+
+    if page == 'terms':
+        html = html.replace(
+            'By accessing our website, using our Tenant Portal, or submitting a '
+            'rental application,',
+            'By accessing our website or submitting a rental application,')
+        html = html.replace(
+            'that will affect the functionality of the Tenant Portal.',
+            'that will affect the functionality of this website.')
+        # drop the section and its contents entry
+        html = re.sub(r'<a\b[^>]*href="#tenant-portal"[^>]*>.*?</a>', '', html, flags=re.S)
+        html = re.sub(r'<section id="tenant-portal">.*?</section>', '', html, flags=re.S)
+        # close up the numbering: 3,4,5 -> 2,3,4
+        for old, new in ((3, 2), (4, 3), (5, 4)):
+            html = html.replace(f'{old}. Rental Applications', f'{new}. Rental Applications')
+            html = html.replace(f'{old}. Prohibited Activities', f'{new}. Prohibited Activities')
+            html = html.replace(f'{old}. Limitation of Liability', f'{new}. Limitation of Liability')
+
     return html
 
 
@@ -403,7 +494,7 @@ def home_hero():
 Affordable Homes <br/><span class="text-heritage-gold">for Families</span>
 </h1>
 <p class="font-body-lg text-body-lg text-surface-container-low max-w-2xl text-balance">
-Expertly managed rentals in Akron, Canton, Barberton, Massillon and the surrounding areas. On-staff maintenance, responsive support, and a resident portal that actually works.
+Expertly managed rentals in Akron, Canton, Barberton, Massillon and the surrounding areas, with on-staff maintenance crews and a leasing team that answers the phone.
 </p>
 <div class="flex flex-wrap gap-4 pt-4">
 <a class="bg-heritage-gold text-deep-navy px-8 py-3 rounded hover:-translate-y-1 hover:shadow-lg transition-all font-label-bold text-label-bold" href="properties.html">View Listings</a>
@@ -471,11 +562,64 @@ def home_reviews():
 </section>'''
 
 
+def home_open_houses():
+    """Surface real upcoming open houses on the landing page.
+
+    A prospective renter arriving at the home page previously had to click
+    through to find out whether anything was actually being shown this week.
+    """
+    import properties
+    items = properties.upcoming_listings(CFG, BUILD_TODAY, limit=3)
+    if not items:
+        return ''
+    rows = []
+    for l in items:
+        zurl = ZILLOW_ADDR.format(slug=properties.addr_slug(l))
+        when = properties.fmt_open_house(l['openHouse'], l.get('openHouseEnd'))
+        bb = []
+        if l.get('beds') is not None:
+            bb.append(f'{properties.num(l["beds"])} bed')
+        if l.get('baths') is not None:
+            bb.append(f'{properties.num(l["baths"])} bath')
+        meta = ' &middot; '.join(bb)
+        meta = f'<p class="font-caption text-caption text-slate-gray mb-3">{meta}</p>' if meta else ''
+        rows.append(
+            f'<a class="group block bg-surface-container-lowest rounded-xl p-6 shadow-card '
+            f'border border-outline-variant/20 hover:shadow-card-hover '
+            f'hover:border-b-heritage-gold transition-all duration-300" href="{zurl}" '
+            f'rel="noopener" target="_blank" data-openhouse-remove="{l["openHouse"]}">'
+            f'<h3 class="font-headline-md text-headline-md text-deep-navy leading-snug mb-1">'
+            f'{l["address"]}</h3>'
+            f'<p class="font-body-md text-body-md text-slate-gray mb-3">{l["city"]}, '
+            f'{l["state"]}</p>{meta}'
+            f'<p class="font-body-md text-body-md text-deep-navy flex items-start gap-2">'
+            f'<span aria-hidden="true" class="material-symbols-outlined text-[19px] '
+            f'text-heritage-gold shrink-0 mt-0.5">event</span><span>{when}</span></p>'
+            f'<span class="mt-4 inline-flex items-center gap-1 font-label-bold '
+            f'text-label-bold text-heritage-gold group-hover:underline">View on Zillow '
+            f'<span aria-hidden="true" class="material-symbols-outlined text-[15px]">'
+            f'arrow_outward</span></span></a>')
+
+    return f'''<section class="px-margin-mobile md:px-gutter py-section-gap-mobile md:py-24 bg-soft-gold">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+<div>
+<p class="font-label-bold text-label-bold uppercase text-secondary mb-2">Coming up</p>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy mb-2">Next open houses</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">No appointment needed &mdash; just turn up. Times are confirmed on each Zillow listing.</p>
+</div>
+<a class="text-secondary font-label-bold text-label-bold flex items-center gap-1 hover:underline shrink-0" href="properties.html">All properties &amp; open houses <span aria-hidden="true" class="material-symbols-outlined text-base">arrow_forward</span></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" data-openhouse-group>{''.join(rows)}</div>
+</div>
+</section>'''
+
+
 def build_home():
     secs = split_sections(grab_main(read('home')))
     offer = clean(secs[2])          # "What We Offer" — keep as designed
     body = ('<main id="main">'
-            + home_hero() + home_areas() + offer + home_reviews()
+            + home_hero() + home_open_houses() + home_areas() + offer + home_reviews()
             + '</main>')
     return body
 
@@ -519,107 +663,121 @@ def build_about():
 
 
 # ==========================================================================
-# PROPERTIES
+# PROPERTIES / FAQ — delegated to build/properties.py and build/faq.py
 # ==========================================================================
-LISTING_PHOTOS = [
-    ('interior-living-fireplace.jpg', 'Living room with original fireplace in a Yoak Properties rental home'),
-    ('interior-bath.jpg', 'Updated bathroom in a Yoak Properties rental home'),
-    ('interior-sunroom.jpg', 'Sunroom with wraparound windows in a Yoak Properties rental home'),
-    ('interior-kitchen-white.jpg', 'Kitchen with white cabinetry in a Yoak Properties rental home'),
-    ('interior-kitchen-classic.jpg', 'Kitchen with full-size appliances in a Yoak Properties rental home'),
-    ('interior-living-carpet.jpg', 'Carpeted living room in a Yoak Properties rental home'),
-]
-
-ZILLOW_NOTE = f'''<div class="bg-soft-gold border-l-4 border-heritage-gold rounded p-6 md:p-8 mb-12 flex flex-col md:flex-row md:items-center gap-6 justify-between">
-<div class="max-w-3xl">
-<h2 class="font-headline-md text-headline-md text-deep-navy mb-2 flex items-center gap-2"><span aria-hidden="true" class="material-symbols-outlined text-heritage-gold">event</span>Open house times and applications are on Zillow</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">The homes below are a sample of what we manage. Availability, current open house dates and the application for every property are kept on the Zillow listing, so always check there before you visit. Photographs show representative Yoak Properties homes rather than a specific unit.</p>
-</div>
-<a class="shrink-0 bg-deep-navy text-surface-off-white px-6 py-3 rounded font-label-bold text-label-bold hover:bg-primary-container transition-colors inline-flex items-center justify-center gap-2" href="{APPLY_URL}" rel="noopener" target="_blank">See all current listings <span aria-hidden="true" class="material-symbols-outlined text-base">arrow_outward</span></a>
-</div>'''
+CFG = dict(OUT=OUT, ZILLOW_ADDR=ZILLOW_ADDR, APPLY_URL=APPLY_URL, APP_FEE=APP_FEE,
+           BUILD_DATE_TEXT=BUILD_DATE_TEXT, PHONE_HREF=PHONE_HREF,
+           PHONE_TEXT=PHONE_TEXT, EMAIL=EMAIL, PORTAL_URL=PORTAL_URL)
 
 
 def build_properties():
-    raw = read('properties')
-    # This page's <h1> intro sits *outside* <main> in the mockup, so take
-    # everything between the header and the footer instead.
-    seg = re.search(r'(?s)</header>(.*?)<footer', raw)
-    body = seg.group(1)
-    intro = re.search(r'(?s)(<section\b(?:(?!</section>).)*?<h1\b.*?</section>)', body)
-    intro_html = clean(intro.group(1)) if intro else ''
-    main = clean(grab_main(raw))
-    main = strip_dates(main)
+    import properties
+    return properties.build(CFG, img, BUILD_TODAY)
 
-    # After the stale dates come out, "6/2" and "3/1" are left stranded next to
-    # a calendar icon. They are bed/bath counts, so say so and swap the icon.
-    main = main.replace('>event<', '>bed<')
-    main = re.sub(r'(?<![\d/.])(\d)\s*/\s*(\d(?:\.\d)?)\s*(?:Layout Details)?(?![\d/])',
-                  r'\1 bed / \2 bath', main)
 
-    # Replace the six dead listing photos, in document order.
-    photos = list(LISTING_PHOTOS)
-
-    def swap(m):
-        if not photos:
-            return m.group(0)
-        f, alt = photos.pop(0)
-        return img('assets/img/' + f, alt,
-                   'w-full h-full object-cover group-hover:scale-105 transition-transform duration-700',
-                   w=800, h=600)
-
-    # the agent avatar comes first in the document; handle it before the rest
-    main = re.sub(
-        r'<img[^>]*alt="Aaliyah"[^>]*>',
-        '<span aria-hidden="true" class="w-full h-full flex items-center justify-center '
-        'bg-deep-navy text-heritage-gold font-headline-md text-headline-md">A</span>',
-        main)
-    main = re.sub(r'<img[^>]*src="https://lh3\.googleusercontent\.com/[^"]*"[^>]*>', swap, main)
-
-    # bare zillow.com homepage links -> the leasing hub
-    main = main.replace('href="https://www.zillow.com/"', f'href="{APPLY_URL}"')
-
-    # dead buttons -> links
-    main = re.sub(r'<button([^>]*)>\s*(Submit Zillow App|Apply on Zillow|Submit Application on Zillow)([^<]*)</button>',
-                  rf'<a\1 href="{APPLY_URL}" rel="noopener" target="_blank">\2\3</a>', main)
-
-    # "Interested in a private tour?" pointed at href="#"
-    main = main.replace('href="#"', f'href="{APPLY_URL}" rel="noopener" target="_blank"')
-    main = re.sub(r'(Interested in a private tour\?)\s*\n?\s*<span aria-hidden',
-                  r'Book a private tour\n<span aria-hidden', main)
-
-    # strip_dates leaves empty elements where a date used to be. Rather than
-    # delete them (which would leave a card with no call to action at all),
-    # turn each into a link to where the live time actually lives.
-    tour_link = (f'<a class="font-caption text-caption text-heritage-gold font-bold '
-                 f'hover:underline inline-flex items-center gap-1" href="{APPLY_URL}" '
-                 f'rel="noopener" target="_blank">Open house times on Zillow '
-                 f'<span aria-hidden="true" class="material-symbols-outlined text-[14px]">arrow_outward</span></a>')
-
-    # Aaron's cards: clock icon followed by an emptied <p>
-    main = re.sub(
-        r'<p class="font-caption text-caption text-slate-gray flex items-center gap-2">\s*'
-        r'<span aria-hidden="true" class="material-symbols-outlined[^"]*">[^<]*</span>\s*</p>',
-        tour_link, main)
-
-    # Trent's rows: "Open House" label above an emptied <p>
-    main = re.sub(
-        r'(<p class="font-caption text-caption text-heritage-gold font-bold uppercase tracking-wider mb-1">Open House</p>)\s*'
-        r'<p class="font-body-md text-deep-navy font-medium">\s*</p>',
-        r'\1' + tour_link, main)
-
-    # any other element emptied by the date strip
-    main = re.sub(r'<(span|p)([^>]*)>\s*</\1>', '', main)
-
-    return ('<main class="w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto '
-            'pb-section-gap-desktop space-y-section-gap-mobile md:space-y-24" id="main">'
-            + intro_html + ZILLOW_NOTE + main + '</main>')
+def build_faq():
+    import faq
+    return faq.build(CFG)
 
 
 # ==========================================================================
 # LEGAL PAGES
 # ==========================================================================
+# --------------------------------------------------------------------------
+# Privacy policy: the three sections the mockup listed but never wrote
+# --------------------------------------------------------------------------
+# The contents list linked to "Data Sharing & Disclosure", "Your Rights" and
+# "Contact Us". None of those sections existed, so all three were dead links -
+# and they are the sections a reader actually looks for. Drafted to match how
+# Yoak operates (screening through Zillow, work orders to contractors,
+# reporting to owners). NOT reviewed by counsel: see README.
+PRIVACY_ICON = ('<div class="w-10 h-10 rounded bg-soft-gold flex items-center justify-center">'
+                '<span aria-hidden="true" class="material-symbols-outlined '
+                'text-on-secondary-container">{icon}</span></div>')
+
+
+def privacy_section(sid, icon, title, body):
+    return ('\n<div class="scroll-mt-28" id="' + sid + '">'
+            '<div class="flex items-center gap-4 mb-6">'
+            + PRIVACY_ICON.format(icon=icon) +
+            '<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile '
+            'md:text-headline-lg text-deep-navy">' + title + '</h2></div>'
+            '<div class="prose max-w-none text-on-surface-variant font-body-md '
+            'text-body-md space-y-4">' + body + '</div></div>')
+
+
+def _card(h, p):
+    return ('<div class="p-6 bg-surface-off-white border border-outline-variant/30 '
+            'rounded-lg shadow-card"><h4 class="font-label-bold text-label-bold '
+            'text-deep-navy mb-2">' + h + '</h4><p class="text-slate-gray text-sm">'
+            + p + '</p></div>')
+
+
+PRIVACY_EXTRA = (
+    privacy_section(
+        'data-sharing', 'domain', 'Data Sharing &amp; Disclosure',
+        '<p>We do not sell your personal information, and we do not share it for '
+        'advertising. We disclose it only where doing so is necessary to run the '
+        'tenancy:</p>'
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">'
+        + _card('Tenant screening',
+                'Applications are submitted and screened through Zillow, whose own '
+                'privacy terms govern that process. Screening providers supply us '
+                'with credit, background and rental history reports.')
+        + _card('Property owners',
+                'We report on applications, tenancy status and payment history to '
+                'the owner of the property you are applying for or renting.')
+        + _card('Contractors and maintenance staff',
+                'Work orders are shared with our own crews and trusted contractors, '
+                'including the contact and access details needed to carry out the '
+                'repair.')
+        + _card('Service providers',
+                'Our property management software provider, payment processors and '
+                'professional advisers process data on our behalf under contract.')
+        + '</div>'
+        '<p class="mt-6">We may also disclose information where we are required to '
+        'by law or by a court order, or in connection with the sale or transfer of '
+        'a property.</p>'),
+    privacy_section(
+        'your-rights', 'security', 'Your Rights',
+        '<p>You can ask to see the personal information we hold about you, and ask '
+        'us to correct it if it is wrong or out of date. Write to us using the '
+        'details below and we will respond within a reasonable period.</p>'
+        '<p>If an application is denied on the basis of a screening report, federal '
+        'law gives you the right to be told, to obtain a free copy of that report '
+        'from the agency that produced it, and to dispute anything in it that is '
+        'inaccurate. The adverse action notice you receive names the agency and '
+        'explains how to reach them.</p>'
+        '<p>We keep applicant and tenant records only for as long as we need them '
+        'for the tenancy, for our legitimate business purposes, and to meet legal '
+        'and tax retention requirements.</p>'
+        '<p>Yoak Properties &amp; Construction Co. is an Equal Housing Opportunity '
+        'provider, and screening criteria are applied uniformly to every '
+        'applicant.</p>'),
+    privacy_section(
+        'contact', 'mail', 'Contact Us',
+        '<p>For any question about this policy, or to make a request about your '
+        'personal information, contact us:</p>'
+        '<address class="not-italic space-y-1 mt-4">'
+        '<span class="block">' + STREET + '</span>'
+        '<span class="block">' + CITY_LINE + '</span>'
+        '<a class="block text-secondary font-semibold hover:underline" href="'
+        + PHONE_HREF + '">' + PHONE_TEXT + '</a>'
+        '<a class="block text-secondary font-semibold hover:underline" href="mailto:'
+        + EMAIL + '">' + EMAIL + '</a></address>'),
+)
+
+
 def build_legal(stem):
     main = clean(grab_main(read(stem)))
+    if stem == 'privacy':
+        # the content column closes with </div></div></div></div></section>;
+        # insert before the innermost close so the sections land inside it
+        marker = '</div>\n</div>\n</div>\n</div>\n</section>'
+        if marker in main:
+            main = main.replace(marker, ''.join(PRIVACY_EXTRA) + '\n' + marker, 1)
+        else:
+            print('  !! privacy: could not locate content column close')
     # These documents have never been published; dating them 2024 would claim a
     # history they do not have. Set to first-publication date.
     main = re.sub(r'Last Updated:\s*[A-Z][a-z]+\s+\d{1,2},\s*\d{4}',
@@ -656,7 +814,7 @@ def build_404():
 # ==========================================================================
 BUILDERS = {'home': build_home, 'about': build_about, 'properties': build_properties,
             'privacy': lambda: build_legal('privacy'), 'terms': lambda: build_legal('terms'),
-            '404': build_404}
+            'faq': build_faq, '404': build_404}
 
 BODY_CLASS = ('bg-surface-off-white text-on-background font-body-md antialiased '
               'min-h-screen flex flex-col selection:bg-heritage-gold/30 selection:text-deep-navy')
@@ -673,16 +831,21 @@ def main():
                 + FOOTER + '\n'
                 + '<script src="assets/js/site.js" defer></script>\n'
                 + '</body>\n</html>\n')
+        page = strip_portal(page, stem)
         page = icons_to_entities(page)
         if outname == '404.html':
             page = page.replace('href="assets/', 'href="/assets/')
             page = page.replace('src="assets/', 'src="/assets/')
-            page = re.sub(r'href="(index|about|properties|privacy|terms)\.html"',
+            page = re.sub(r'href="(index|about|properties|privacy|terms|faq)\.html"',
                           r'href="/\1.html"', page)
             page = page.replace('href="about.html#contact"', 'href="/about.html#contact"')
         with open(os.path.join(OUT, outname), 'w', encoding='utf-8') as f:
             f.write(page)
         print(f'  wrote {outname:18s} {len(page)//1024}KB')
+
+    if not PORTAL_URL:
+        print('  -- note: PORTAL_URL is empty, so the Tenant Portal button is omitted'
+              ' from the header, mobile menu and footer. Set it in transform.py.')
 
     leftovers = 0
     for _, outname, *_ in PAGES:
@@ -697,7 +860,10 @@ def main():
                            ('C:\\', 'windows path'),
                            ('44302', 'wrong zip'),
                            ('rounded-DEFAULT', 'bad radius class'),
-                           ('2024 Yoak', 'stale copyright')]:
+                           ('2024 Yoak', 'stale copyright'),
+                           ('portal', 'portal reference'),
+                           ('Portal', 'portal reference'),
+                           ('managebuilding.com', 'old Buildium portal link')]:
             n = s.count(bad)
             if n:
                 print(f'  !! {outname}: {n}x {label}')
