@@ -336,3 +336,4 @@ right in a screenshot but were not a working website. For the record:
 | Phone | 330-794-7156 |
 | Email | info@yoakproperties.com |
 | Resident portal | https://yoakproperties.managebuilding.com/Resident/public/home |
+"# yoakpropertiescom" 
