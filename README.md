@@ -93,13 +93,17 @@ any mapping would repeat photos across different addresses and imply each was of
 that house. The real interiors appear once, in a gallery labelled as
 representative. Add per-address photos and the card layout can gain an image.
 
-### 6. Entity name is inconsistent
+### 6. Entity name differs between the branding and the payee line — left as-is
 
-The site says "Yoak Properties & Construction **Co.**" The FAQ tells applicants
-to make cashier's cheques payable to "Yoak Properties and Construction **LLC**".
-The Ohio registration is "YOAK PROPERTIES AND CONSTRUCTION CO." The FAQ page
-keeps the "LLC" wording verbatim, because that is what a cheque has to say — but
-somebody should confirm which entity is correct and make the two agree.
+The site brand is "Yoak Properties & Construction **Co.**", which matches the
+Ohio registration ("YOAK PROPERTIES AND CONSTRUCTION CO."). The FAQ tells
+applicants to make payments out to "Yoak Properties and Construction **LLC**",
+taken verbatim from Yoak's own FAQ document.
+
+**This is intentional and needs no action from IT.** A payee line has to match
+whatever the bank expects, and that is an ownership and finance call, not a
+website one. Noted here only so nobody "fixes" the inconsistency later without
+asking Steve or Kipp first.
 
 ### 7. Google reviews link
 
