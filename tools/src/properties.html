@@ -1,0 +1,493 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Yoak Properties - Our Properties</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#303032",
+                      "on-background": "#1b1b1d",
+                      "surface-container-highest": "#e4e2e4",
+                      "primary": "#000000",
+                      "on-secondary-container": "#745c00",
+                      "on-tertiary-fixed-variant": "#574425",
+                      "soft-gold": "#F9F5E8",
+                      "error": "#ba1a1a",
+                      "secondary": "#735c00",
+                      "secondary-fixed": "#ffe088",
+                      "on-tertiary-fixed": "#271901",
+                      "secondary-container": "#fed65b",
+                      "on-secondary-fixed": "#241a00",
+                      "inverse-primary": "#bec6e0",
+                      "tertiary": "#000000",
+                      "surface": "#fcf8fa",
+                      "on-tertiary-container": "#98805d",
+                      "tertiary-fixed": "#fcdeb5",
+                      "secondary-fixed-dim": "#e9c349",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-high": "#eae7e9",
+                      "tertiary-container": "#271901",
+                      "on-surface": "#1b1b1d",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#131b2e",
+                      "surface-dim": "#dcd9db",
+                      "on-primary-container": "#7c839b",
+                      "primary-fixed": "#dae2fd",
+                      "on-secondary": "#ffffff",
+                      "slate-gray": "#64748B",
+                      "tertiary-fixed-dim": "#dec29a",
+                      "heritage-gold": "#D4AF37",
+                      "surface-container-low": "#f6f3f5",
+                      "surface-variant": "#e4e2e4",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#fcf8fa",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#f0edef",
+                      "primary-fixed-dim": "#bec6e0",
+                      "surface-tint": "#565e74",
+                      "on-secondary-fixed-variant": "#574500",
+                      "outline-variant": "#c6c6cd",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#45464d",
+                      "background": "#fcf8fa",
+                      "inverse-on-surface": "#f3f0f2",
+                      "deep-navy": "#0F172A",
+                      "surface-off-white": "#FDFDFD",
+                      "outline": "#76777d",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed": "#131b2e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "section-gap-desktop": "120px",
+                      "section-gap-mobile": "64px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Montserrat"
+                      ],
+                      "headline-lg": [
+                              "Montserrat"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "headline-xl": [
+                              "Montserrat"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-bold": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-bold": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .bento-item-large {
+            grid-column: span 12;
+        }
+        @media (min-width: 768px) {
+            .bento-item-large {
+                grid-column: span 8;
+            }
+            .bento-item-small {
+                grid-column: span 4;
+            }
+            .bento-item-half {
+                grid-column: span 6;
+            }
+        }
+      </style>
+</head>
+<body class="bg-surface-off-white text-on-background font-body-md antialiased selection:bg-heritage-gold selection:text-white">
+<!-- Top Navigation -->
+<header class="bg-surface-off-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto h-20">
+<!-- Brand -->
+<a class="text-headline-md font-headline-md font-bold text-deep-navy tracking-tight flex items-center gap-2 hover:opacity-80 transition-opacity" href="{{DATA:SCREEN:SCREEN_2}}">
+                Yoak Properties
+            </a>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-label-bold font-label-bold text-slate-gray hover:text-deep-navy transition-colors pb-1" href="{{DATA:SCREEN:SCREEN_2}}">Home</a>
+<a aria-current="page" class="text-label-bold font-label-bold text-heritage-gold font-bold border-b-2 border-heritage-gold pb-1" href="{{DATA:SCREEN:SCREEN_9}}">Our Properties</a>
+<a class="text-label-bold font-label-bold text-slate-gray hover:text-deep-navy transition-colors pb-1" href="{{DATA:SCREEN:SCREEN_10}}">About Us</a>
+</nav>
+<!-- Actions -->
+<div class="hidden md:flex items-center gap-4">
+<a class="font-label-bold text-label-bold bg-deep-navy text-white px-6 py-2.5 rounded hover:bg-deep-navy/90 transition-colors shadow-sm" href="{{DATA:SCREEN:SCREEN_2}}">
+                    Tenant Portal
+                </a>
+</div>
+<!-- Mobile Menu Toggle -->
+<button aria-label="Toggle Menu" class="md:hidden text-deep-navy p-2 hover:bg-surface-container-low rounded transition-colors">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</header>
+<!-- Page Header (Hero) -->
+<section class="w-full pt-16 pb-12 md:pt-24 md:pb-20 px-margin-mobile md:px-gutter max-w-container-max mx-auto text-center">
+<h1 class="font-headline-xl text-headline-xl text-deep-navy mb-4">Our Properties</h1>
+<p class="font-body-lg text-body-lg text-slate-gray max-w-2xl mx-auto">
+            Discover our curated selection of quality homes across Ohio. Find the perfect space for your family, expertly managed by our dedicated team.
+        </p>
+</section>
+<!-- Main Content -->
+<main class="w-full px-margin-mobile md:px-gutter max-w-container-max mx-auto pb-section-gap-desktop space-y-section-gap-mobile md:space-y-section-gap-desktop">
+<!-- Aaliyah's Section -->
+<section class="scroll-mt-24" id="aaliyahs-properties">
+<div class="flex items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-heritage-gold shadow-sm shrink-0">
+<img alt="Aaliyah" class="w-full h-full object-cover" data-alt="Professional headshot of a female real estate agent named Aaliyah, smiling warmly, corporate modern style." src="https://lh3.googleusercontent.com/aida/AEtjO1V900sRGy5F5HyMGPLA-DbFUj0bfcpe_pxa6-1qFex9yLfmMWf_zSih4P3mEnvUWpcCo9x-oogwCQbN_17NLHw48wKY1eZizvD4pfsBxBkCeIxALv2HQgleCv1FJiY5sF6Hyz0N_G6dRLl-OsAfSInm81uEynWoP9mPPbzEN2rwsKhMgFsFJPGhl31BOpeB_-gRvV63wpjrpUmaeMW3PpGHfbAldsW1JpEMFnfPuJfNTkSeeYfNjR-lthg">
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-deep-navy">Aaliyah's Properties</h2>
+<p class="font-body-md text-slate-gray">Akron Area Specialist</p>
+</div>
+</div>
+<div class="bento-grid">
+<!-- Large Featured Card -->
+<article class="bento-item-large group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300">
+<div class="absolute top-4 left-4 z-10 flex gap-2">
+<span class="bg-soft-gold text-deep-navy font-caption text-caption px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Upcoming Open House</span>
+</div>
+<div class="aspect-video w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Exterior view of a newly renovated house at 1278 Beardsley St, Akron, bathed in bright, inviting sunlight, premium real estate photography style." loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1X84ynPHN8nycxUt9SwDrj4EFhihqoEPryA_qJKCpv265t3Q_JTlZ_pMTSlm1tA4NfLmRblnjv7gPNQDdige-Vy0L4Z9wvmRzbDuAGIR5XEznSECnI1Vsmnh9XFVodsyug2UrCLb8I5QNXJFIelbxsopQ27rBRBXu1fV3NRFSK_OB8Qu0xZt-w8EvWKY-kJyUmzHxNQFAY7lDs_cd1eWvUoCFlXGiu17WetKTR7_i0KpUlbgX4swgqKXTzD">
+</div>
+<div class="p-6 md:p-8 flex flex-col md:flex-row justify-between gap-6">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy mb-2">1278 Beardsley St, Akron</h3>
+<p class="font-body-md text-slate-gray mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-heritage-gold">event</span>
+                                6/2 Open House is Thursday, June 25th 5:00-5:30 PM
+                            </p>
+<p class="font-caption text-caption text-slate-gray uppercase tracking-widest font-bold">Lease to Purchase Only</p>
+</div>
+<div class="md:text-right shrink-0">
+<a class="inline-flex items-center justify-center gap-2 font-label-bold text-label-bold bg-deep-navy text-white px-6 py-3 rounded hover:bg-deep-navy/90 transition-colors shadow-sm w-full md:w-auto" href="https://www.zillow.com/" rel="noopener noreferrer" target="_blank">
+                                Apply on Zillow
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Smaller Card 1 -->
+<article class="bento-item-half group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300 flex flex-col">
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Bright interior of an apartment at 189 Watson St #1Down, Akron, showing a clean bathroom with gray walls and tile, soft daylight." loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1V6ZypfqPUBTSQOuU0tWOZfCXrap3x5dz05G3Ki-z21iPWArJx_u0kfwA7mvCmr2OQ0IXRsiiQzVIW9NkbXoqVAUG9oPITJVE3SCjA7-GNmbWlOb3BOd2YxSGXLEKqFfSJJ89JGJwZa081FKW5qROeFjjWqlUHBzsxgVv2Vvajyxs2vg1cbDZlWux3kSmhl7OXbTs2vMCdusgHJYWZ6Tqnw1f4BJDOxzy4-sAvPowDr1HsRlUbuv_-E9RXv">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy text-xl mb-2">189 Watson St #1Down, Akron</h3>
+<p class="font-body-md text-slate-gray mb-6 flex-1 flex items-start gap-2">
+<span class="material-symbols-outlined text-[20px] text-heritage-gold shrink-0 mt-1">event</span>
+<span class="">3/1 Open House is Thursday, June 25th 5:40-6:10 PM</span>
+</p>
+<a class="font-label-bold text-label-bold text-heritage-gold hover:text-secondary transition-colors inline-flex items-center gap-1" href="#">
+                            Interested in a private tour?
+                            <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+</div>
+</article>
+<!-- Smaller Card 2 -->
+<article class="bento-item-half group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300 flex flex-col">
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Sunlit sunroom interior at 1248 Newton St, Akron, with large windows and gray walls, conveying a bright and airy atmosphere." loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1XzcnjBX-Yl65c3swRIAjIvIj-kZ4a4SBPBdEtbWQG1BGyfl7V70RDnRd4j-uvIVEklaI7K65ZBPd3M4_x4rkajr3YWp5izOJt3ozPkcN4TYSiIQXQO1XvgTUafsmcX4JlU9aaFz9rf99hra4gcdTn7vPpL56cGitdracfUO3jTW9lfPWo5oe5zUuEWbeCYK6_L9SITKYrNvzKBwapUzsEvt3oy3MeEyn-lWOu1i-9XCl8sL3Mu9aef5M0">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy text-xl mb-2">1248 Newton St, Akron</h3>
+<p class="font-body-md text-slate-gray mb-6 flex-1 flex items-start gap-2">
+<span class="material-symbols-outlined text-[20px] text-heritage-gold shrink-0 mt-1">bed</span>
+<span class="">2/1 Layout Details</span>
+</p>
+<a class="font-label-bold text-label-bold text-heritage-gold hover:text-secondary transition-colors inline-flex items-center gap-1" href="#">
+                            Interested in a private tour?
+                            <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- Aaron's Section -->
+<section class="scroll-mt-24" id="aarons-listings">
+<div class="flex items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-heritage-gold shadow-sm shrink-0 bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-slate-gray">person</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-deep-navy">Aaron's Listings</h2>
+<p class="font-body-md text-slate-gray">Akron &amp; Surrounding Areas</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Listing 1 -->
+<article class="group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300 flex flex-col">
+<div class="absolute top-4 right-4 z-10 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-deep-navy font-caption text-caption px-3 py-1 rounded-full font-semibold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">play_circle</span> Video Tour
+                         </span>
+</div>
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Exterior view of 730 Carlysle St. #1, Akron, OH, showing a well-maintained property with mature trees, shot in clear daylight." loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1XEdYUc_NxT086WgA7MrJ6Bcuy-pv8dgi2c2yExjqYMhiM1hloPHP4ygHcle8m0J3qjVB09_O752BbVpIimqhJblQv7uY0TeFq0L-KzpDpgZHbcnyjIpwtm2mrlAkp0ZdH3PzO1neWIQBX8kxVcd4ZgCIeKvkJ0jm2jPlwELqIlMwyWQbGUESs2Z1sUZysVLEqaK6bhFJRmfpYNcdR97XQ3WvtMuvSh58FLShvnhZTLOoQPlvLvZOv9ziE">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy text-xl mb-2">730 Carlysle St. #1</h3>
+<p class="font-body-md text-slate-gray text-sm mb-4">Akron, OH</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20">
+<p class="font-caption text-caption text-slate-gray flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-heritage-gold">schedule</span>
+                                Open House Tue, Jun 16, 6:00-6:15 PM
+                            </p>
+</div>
+</div>
+</article>
+<!-- Listing 2 -->
+<article class="group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300 flex flex-col">
+<div class="absolute top-4 right-4 z-10 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-deep-navy font-caption text-caption px-3 py-1 rounded-full font-semibold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">play_circle</span> Video Tour
+                         </span>
+</div>
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-container flex items-center justify-center"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1WGO3dk_rVz61EdcvM5r2MLP0t3DY_cIeoPxs3MV7vCQ7AlwsD9DaGavPZI9qSsQnE-YZP3CTjkDl4BHskpaKvOHqI6qCbk4SkHawqIJmLEwSs42MpFbpNlwZcyYQDEJg3HQpI9sSSn0CBAcDbzVyj4E7aTg5bnqtVC8mgTWd2SxGkuMjM6saWfqYRF3I-8mKyB66KTPSKemiuLIuUQfw1FWzrSC9n1RiZUYchq-InIH6GejCeyZg9cnRdN"></div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy text-xl mb-2">730 Carlysle St. #2</h3>
+<p class="font-body-md text-slate-gray text-sm mb-4">Akron, OH</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20">
+<p class="font-caption text-caption text-slate-gray flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-heritage-gold">schedule</span>
+                                Open House Tue, Jun 16, 6:15-6:30 PM
+                            </p>
+</div>
+</div>
+</article>
+<!-- Listing 3 -->
+<article class="group relative bg-white rounded-xl overflow-hidden border border-outline-variant/20 shadow-[0_4px_20px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.08)] hover:border-b-heritage-gold hover:border-b transition-all duration-300 flex flex-col">
+<div class="absolute top-4 right-4 z-10 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-deep-navy font-caption text-caption px-3 py-1 rounded-full font-semibold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">play_circle</span> Video Tour
+                         </span>
+</div>
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-container flex items-center justify-center"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" src="https://lh3.googleusercontent.com/aida/AEtjO1WbSHabL3QJUoaYDp0PXnwdFu-olK2vqZMKOwSrqxT1BMqPIACtqVBKoIgI-t_BRCwLsRqq35KsVjWA1TMRjy2Jz1xRMEk_y7WUsXOnfrvwMsWPBJ_qFGFBPsZQ0W2nEBuC0ebQsUMP0On32qG6AfmvxJhAVlnEGKtoN8rdjYdKJLv5Zia-0EFuK-kR9Fx5g6Oa6UWRqH553XkKrykWhMLP6RMhjTrYUDxXcmSG7vgB3QreMUtptp9EAQQ"></div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-deep-navy text-xl mb-2">548 Vernon Odom Blvd.</h3>
+<p class="font-body-md text-slate-gray text-sm mb-4">Akron, OH 44307</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20">
+<p class="font-caption text-caption text-slate-gray flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-heritage-gold">schedule</span>
+                                Open House Tue, Jun 16, 5:00-5:30 PM
+                            </p>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Trent's Section -->
+<section class="scroll-mt-24" id="trents-properties">
+<div class="flex items-center gap-4 mb-8 pb-4 border-b border-outline-variant/30">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-heritage-gold shadow-sm shrink-0 bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-slate-gray">person</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-deep-navy">Trent's Properties</h2>
+<p class="font-body-md text-slate-gray">Barberton &amp; Akron</p>
+</div>
+</div>
+<div class="bg-soft-gold rounded-xl p-8 md:p-12 border border-outline-variant/10 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 -mr-12 -mt-12 w-64 h-64 bg-heritage-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-3xl relative z-10">
+<h3 class="font-headline-md text-headline-md text-deep-navy mb-6">Upcoming Featured Listings</h3>
+<ul class="space-y-6">
+<li class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white rounded-lg shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-outline-variant/10 hover:border-heritage-gold/50 transition-colors">
+<div>
+<h4 class="font-label-bold text-label-bold text-deep-navy text-lg">393 Wunderlich, Barberton</h4>
+<p class="font-body-md text-slate-gray text-sm mt-1">4 Beds / 2 Baths</p>
+</div>
+<div class="mt-4 md:mt-0 text-left md:text-right">
+<p class="font-caption text-caption text-heritage-gold font-bold uppercase tracking-wider mb-1">Open House</p>
+<p class="font-body-md text-deep-navy font-medium">Mon, July 20th • 5:00 - 5:30 PM</p>
+</div>
+</li>
+<li class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white rounded-lg shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-outline-variant/10 hover:border-heritage-gold/50 transition-colors">
+<div>
+<h4 class="font-label-bold text-label-bold text-deep-navy text-lg">632 Grace Ave, Akron</h4>
+<p class="font-body-md text-slate-gray text-sm mt-1">4 Beds / 2 Baths</p>
+</div>
+<div class="mt-4 md:mt-0 text-left md:text-right">
+<p class="font-caption text-caption text-heritage-gold font-bold uppercase tracking-wider mb-1">Open House</p>
+<p class="font-body-md text-deep-navy font-medium">Mon, July 20th • 5:45 - 6:15 PM</p>
+</div>
+</li>
+<li class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white rounded-lg shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-outline-variant/10 hover:border-heritage-gold/50 transition-colors">
+<div>
+<h4 class="font-label-bold text-label-bold text-deep-navy text-lg">199 Nieman, Akron</h4>
+<p class="font-body-md text-slate-gray text-sm mt-1">3 Beds / 1.5 Baths</p>
+</div>
+<div class="mt-4 md:mt-0 text-left md:text-right">
+<p class="font-caption text-caption text-heritage-gold font-bold uppercase tracking-wider mb-1">Open House</p>
+<p class="font-body-md text-deep-navy font-medium">Mon, July 20th</p>
+</div>
+</li>
+</ul>
+<div class="mt-10 pt-8 border-t border-slate-gray/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<p class="font-body-lg text-body-lg text-deep-navy italic">"Interested in a private tour? We're here to help."</p>
+<a class="font-label-bold text-label-bold bg-transparent text-deep-navy border border-heritage-gold px-6 py-2.5 rounded hover:bg-heritage-gold/5 transition-colors whitespace-nowrap" href="https://www.zillow.com/" rel="noopener noreferrer" target="_blank">
+                            Submit Zillow App
+                        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="mt-24 py-16 bg-deep-navy rounded-2xl text-center px-6 relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 50% 50%, #ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<span class="material-symbols-outlined text-4xl text-heritage-gold mb-4">real_estate_agent</span>
+<h2 class="font-headline-lg text-headline-lg text-white mb-4">Ready to make a move?</h2>
+<p class="font-body-lg text-body-lg text-surface-variant/80 mb-8">
+                    If you're interested in a private tour for any of our available properties, please submit an application to begin the process.
+                </p>
+<a class="inline-flex items-center gap-2 font-label-bold text-label-bold bg-heritage-gold text-deep-navy px-8 py-3.5 rounded hover:bg-heritage-gold/90 transition-transform hover:-translate-y-0.5 shadow-lg" href="https://www.zillow.com/" rel="noopener noreferrer" target="_blank">
+                    Submit Application on Zillow
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-deep-navy text-surface-off-white border-t border-slate-gray/20">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-gutter py-section-gap-mobile md:py-16 max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="col-span-1 md:col-span-2">
+<a class="font-headline-md text-headline-md text-heritage-gold mb-4 block hover:opacity-80 transition-opacity" href="{{DATA:SCREEN:SCREEN_2}}">Yoak Properties</a>
+<p class="font-body-md text-surface-variant/80 max-w-sm mb-6">
+                    Providing quality, affordable housing and expert property management services across Ohio.
+                </p>
+<p class="font-caption text-caption text-surface-variant/60">
+                    © 2024 Yoak Properties &amp; Construction Co. All rights reserved.
+                </p>
+</div>
+<!-- Contact Column -->
+<div>
+<h4 class="font-label-bold text-label-bold text-white mb-4 tracking-wider uppercase">Contact</h4>
+<ul class="space-y-3">
+<li class="">
+<span class="font-body-md text-surface-variant/80 block">1361 Wooster Road W, Suite A</span>
+<span class="font-body-md text-surface-variant/80 block">Barberton, OH 44203</span>
+</li>
+<li class="">
+<a class="font-body-md text-surface-variant/80 hover:text-heritage-gold transition-colors inline-flex items-center gap-2" href="tel:330-794-7156">
+<span class="material-symbols-outlined text-[16px]">call</span>
+                            330-794-7156
+                        </a>
+</li>
+</ul>
+</div>
+<!-- Legal Column -->
+<div>
+<h4 class="font-label-bold text-label-bold text-white mb-4 tracking-wider uppercase">Legal</h4>
+<ul class="space-y-3 flex flex-col">
+<a class="font-body-md text-surface-variant/80 hover:text-heritage-gold transition-colors inline-block w-fit" href="{{DATA:SCREEN:SCREEN_6}}">Privacy Policy</a>
+<a class="font-body-md text-surface-variant/80 hover:text-heritage-gold transition-colors inline-block w-fit" href="{{DATA:SCREEN:SCREEN_8}}">Terms of Service</a>
+<a class="font-body-md text-surface-variant/80 hover:text-heritage-gold transition-colors inline-block w-fit" href="{{DATA:SCREEN:SCREEN_10}}#contact">Contact Us</a>
+</ul>
+</div>
+</div>
+</footer>
+
+
+</body></html>

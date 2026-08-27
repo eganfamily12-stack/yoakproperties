@@ -1,0 +1,26 @@
+# Node tooling — reinstall with `npm install` inside tools/
+node_modules/
+package-lock.json
+
+# Original Claude Design mockup exports. Kept on disk as source material but
+# not committed: the reproducible copies live in tools/src/.
+a_high_end_professional_banner_for_a_real_estate_company_called_yoak/
+a_high_quality_professional_real_estate_photograph_of_the_house_in_data_image/
+about_us_yoak_properties/
+our_properties_listings/
+premium_industrial_modern/
+privacy_policy_yoak_properties/
+terms_of_service_yoak_properties/
+yoak_properties_home_redesign/
+image_from_https_*/
+extracted_text_from_*.md
+_contact_sheet.png
+
+# Build scratch
+shots/
+tools/ms-static.ttf
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store

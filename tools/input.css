@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Self-hosted fonts. No third-party requests: the site renders identically
+   on networks that block Google Fonts, and there is no FOUT waterfall. --- */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/inter-latin-400-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/montserrat-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/montserrat-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/montserrat-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Yoak Icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/yoak-icons.woff2') format('woff2');
+}
+
+/* ---------------------------------------------------------------
+   Yoak Properties — site styles
+   Everything here was previously duplicated in per-page <style>
+   blocks across the five mockups. Consolidated so one edit is one
+   edit, not five.
+   --------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* clears the 80px sticky header when jumping to an #anchor */
+    scroll-padding-top: 6rem;
+  }
+
+  /* Respect users who ask the OS for reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Visible keyboard focus everywhere — the mockups had none. */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid #D4AF37;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Icons come from a 3 KB local subset containing only the 29 glyphs this
+     site uses, instead of Google's ~4 MB variable font. Because the glyphs are
+     addressed by codepoint rather than by ligature, a failed font load shows
+     nothing rather than the words "real_estate_agent". */
+  .material-symbols-outlined {
+    font-family: 'Yoak Icons';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    white-space: nowrap;
+    direction: ltr;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'liga';
+  }
+
+  .text-balance { text-wrap: balance; }
+
+  /* Keyboard-only skip link. */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: #0F172A;
+    color: #FDFDFD;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+  .skip-link:focus { left: 0; }
+
+  /* Properties page bento layout. */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+  .bento-item-large { grid-column: span 12; }
+  .bento-item-small { grid-column: span 12; }
+  .bento-item-half  { grid-column: span 12; }
+  @media (min-width: 768px) {
+    .bento-item-large { grid-column: span 8; }
+    .bento-item-small { grid-column: span 4; }
+    .bento-item-half  { grid-column: span 6; }
+  }
+
+  /* Long-form legal copy rhythm (privacy / terms). */
+  .text-content-wrapper p { margin-bottom: 1.5rem; }
+  .text-content-wrapper h2 { margin-top: 3rem; margin-bottom: 1rem; }
+}
