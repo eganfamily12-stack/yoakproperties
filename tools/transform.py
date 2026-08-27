@@ -411,10 +411,9 @@ def strip_portal(html, page):
     if page == 'about':
         html = html.replace(
             'Online Portal',
-            'Lease to Purchase').replace(
+            'Select Homes Offered Lease to Purchase').replace(
             'Convenient online portal for quick access to important services and payments.',
-            'Selected homes are offered lease to purchase, with on-time payments '
-            'reported to help build your credit toward buying.')
+            'Helping to build your credit toward home buying.')
         html = html.replace('&#xE1B1;', '&#xEA09;')          # devices -> home_work
 
     if page == 'privacy':
